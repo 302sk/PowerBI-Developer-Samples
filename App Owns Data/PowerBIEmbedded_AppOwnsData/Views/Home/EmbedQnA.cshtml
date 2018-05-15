@@ -62,7 +62,7 @@
         datasetIds:[embedDashboardId],
         type: 'qna',
         viewMode:models.QnaMode['ResultOnly'],
-        question: 'new hire count by employment type'
+        question: @if(string.IsNullOrEmpty(Model.ErrorMessage)){"norm of percent of turnover by business unit"}else{"@Model.ErrorMessage"}
     };
 
     // Get a reference to the embedded dashboard HTML element
