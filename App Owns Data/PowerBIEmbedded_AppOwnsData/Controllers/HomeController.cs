@@ -130,8 +130,14 @@ namespace PowerBIEmbedded_AppOwnsData.Controllers
             return View(result);
         }
 
-        public async Task<ActionResult> EmbedQnA(int id, string question)
+        public async Task<ActionResult> EmbedQnA(string question)
         {
+            //if parameter question is null or empty use default question
+            if (string.IsNullOrEmpty(question))
+            {
+                question = "norm of percent of turnover";
+            }
+
             var error = GetWebConfigErrors();
             if (error != null)
             {
@@ -191,10 +197,7 @@ namespace PowerBIEmbedded_AppOwnsData.Controllers
                     });
                 }
 
-                //if parameter question is null or empty use default question
-                if(string.IsNullOrEmpty(question)){
-                    question = "norm of percent of turnover";
-                }
+
 
                 // Generate Embed Configuration.
                 var embedConfig = new EmbedConfig()
