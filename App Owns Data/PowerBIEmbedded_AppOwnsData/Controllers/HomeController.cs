@@ -191,6 +191,11 @@ namespace PowerBIEmbedded_AppOwnsData.Controllers
                     });
                 }
 
+                //if parameter question is null or empty use default question
+                if(string.IsNullOrEmpty(question)){
+                    question = "norm of percent of turnover";
+                }
+
                 // Generate Embed Configuration.
                 var embedConfig = new EmbedConfig()
                 {
