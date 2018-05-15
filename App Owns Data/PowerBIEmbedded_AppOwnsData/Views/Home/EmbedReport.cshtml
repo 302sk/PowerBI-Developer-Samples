@@ -77,7 +77,9 @@
     // This also includes settings and options such as filters.
     // You can find more information at https://github.com/Microsoft/PowerBI-JavaScript/wiki/Embed-Configuration-Details.
     var config = {
-        type: 'report',
+        //type: 'report',
+        type: 'qna',
+        question: 'new hire count by employment type',
         tokenType: models.TokenType.Embed,
         accessToken: accessToken,
         embedUrl: embedUrl,
