@@ -53,16 +53,12 @@
     // This also includes settings and options such as filters.
     // You can find more information at https://github.com/Microsoft/PowerBI-JavaScript/wiki/Embed-Configuration-Details.
     var config = {
-        //type: 'dashboard',
+        type: 'dashboard',
         tokenType: models.TokenType.Embed,
         accessToken: accessToken,
         embedUrl: embedUrl,
-        //id: embedDashboardId,
-        //---------
-        datasetIds:['27df07c8-9887-4b03-8442-7aa0a29d603f'],
-        type: 'qna',
-        viewMode:models.QnaMode['ResultOnly'],
-        question: 'new hire count by employment type'
+        id: embedDashboardId,
+
     };
 
     // Get a reference to the embedded dashboard HTML element
