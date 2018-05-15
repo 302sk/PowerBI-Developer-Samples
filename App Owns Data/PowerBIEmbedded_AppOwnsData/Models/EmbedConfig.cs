@@ -31,5 +31,7 @@ namespace PowerBIEmbedded_AppOwnsData.Models
         public string Roles { get; set; }
 
         public string ErrorMessage { get; internal set; }
+
+        public string Question { get; set; }
     }
 }

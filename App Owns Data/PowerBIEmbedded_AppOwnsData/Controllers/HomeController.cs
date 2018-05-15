@@ -208,7 +208,9 @@ namespace PowerBIEmbedded_AppOwnsData.Controllers
                 {
                     EmbedToken = tokenResponse,
                     EmbedUrl = "https://app.powerbi.com/qnaEmbed?groupId=" + GroupId,
-                    Id = qstn
+                    Id = dataset.Id,
+                    Question = qstn
+
                 };
 
                 return View(embedConfig);

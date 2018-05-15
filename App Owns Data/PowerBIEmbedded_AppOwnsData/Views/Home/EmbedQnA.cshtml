@@ -48,7 +48,7 @@
     // Get models. models contains enums that can be used.
     var models = window['powerbi-client'].models;
 
-    var qstn = "@Model.ErrorMessage";
+    var qstn = "@Model.Question";
 
     // Embed configuration used to describe the what and how to embed.
     // This object is used when calling powerbi.embed.
@@ -64,7 +64,7 @@
         datasetIds:[embedDashboardId],
         type: 'qna',
         viewMode:models.QnaMode['ResultOnly'],
-        question: embedDashboardId
+        question: qstn
     };
 
     // Get a reference to the embedded dashboard HTML element
