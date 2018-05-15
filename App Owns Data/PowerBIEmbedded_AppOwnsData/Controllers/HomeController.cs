@@ -130,6 +130,79 @@ namespace PowerBIEmbedded_AppOwnsData.Controllers
             return View(result);
         }
 
+        public async Task<ActionResult> EmbedQnA()
+        {
+            var error = GetWebConfigErrors();
+            if (error != null)
+            {
+                return View(new EmbedConfig()
+                {
+                    ErrorMessage = error
+                });
+            }
+
+            // Create a user password cradentials.
+            var credential = new UserPasswordCredential(Username, Password);
+
+            // Authenticate using created credentials
+            var authenticationContext = new AuthenticationContext(AuthorityUrl);
+            var authenticationResult = await authenticationContext.AcquireTokenAsync(ResourceUrl, ClientId, credential);
+
+            if (authenticationResult == null)
+            {
+                return View(new EmbedConfig()
+                {
+                    ErrorMessage = "Authentication Failed."
+                });
+            }
+
+            var tokenCredentials = new TokenCredentials(authenticationResult.AccessToken, "Bearer");
+
+            // Create a Power BI Client object. It will be used to call Power BI APIs.
+            using (var client = new PowerBIClient(new Uri(ApiUrl), tokenCredentials))
+            {
+                // Get a list of dashboards.
+                //var dashboards = await client.Dashboards.GetDashboardsInGroupAsync(GroupId);
+
+                // Get a list of dataset
+                var datasets = await client.Datasets.GetDatasetsInGroupAsync(GroupId);
+
+                // Get the first report in the group.
+                var dataset = datasets.Value.FirstOrDefault();
+
+                if (dataset == null)
+                {
+                    return View(new EmbedConfig()
+                    {
+                        ErrorMessage = "Group has no datasets."
+                    });
+                }
+
+                // Generate Embed Token.
+                var generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "view");
+                //var tokenResponse = await client.Dashboards.GenerateTokenInGroupAsync(GroupId, dashboard.Id, generateTokenRequestParameters);
+                var tokenResponse = await client.Datasets.GenerateTokenInGroupAsync(GroupId, dataset.Id, generateTokenRequestParameters);
+
+                if (tokenResponse == null)
+                {
+                    return View(new EmbedConfig()
+                    {
+                        ErrorMessage = "Failed to generate embed token."
+                    });
+                }
+
+                // Generate Embed Configuration.
+                var embedConfig = new EmbedConfig()
+                {
+                    EmbedToken = tokenResponse,
+                    EmbedUrl = "https://app.powerbi.com/qnaEmbed?groupId=" + GroupId,
+                    Id = dataset.Id
+                };
+
+                return View(embedConfig);
+            }
+        }
+
         public async Task<ActionResult> EmbedDashboard()
         {
             var error = GetWebConfigErrors();
@@ -191,8 +264,7 @@ namespace PowerBIEmbedded_AppOwnsData.Controllers
                 var embedConfig = new EmbedConfig()
                 {
                     EmbedToken = tokenResponse,
-                    //EmbedUrl = dashboard.EmbedUrl,
-                    EmbedUrl = "https://app.powerbi.com/qnaEmbed?groupId=" + GroupId,
+                    EmbedUrl = dashboard.EmbedUrl,
                     Id = dashboard.Id
                 };
 
