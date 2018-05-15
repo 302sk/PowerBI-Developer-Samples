@@ -130,7 +130,7 @@ namespace PowerBIEmbedded_AppOwnsData.Controllers
             return View(result);
         }
 
-        public async Task<ActionResult> EmbedQnA()
+        public async Task<ActionResult> EmbedQnA(int id, string question)
         {
             var error = GetWebConfigErrors();
             if (error != null)
@@ -197,7 +197,7 @@ namespace PowerBIEmbedded_AppOwnsData.Controllers
                     EmbedToken = tokenResponse,
                     EmbedUrl = "https://app.powerbi.com/qnaEmbed?groupId=" + GroupId,
                     Id = dataset.Id,
-                    ErrorMessage = Request.Params["q"],
+                    ErrorMessage = question
                 };
 
                 return View(embedConfig);
