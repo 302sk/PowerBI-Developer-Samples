@@ -8,7 +8,7 @@
 <script src="https://npmcdn.com/es6-promise@3.2.1"></script>
 <script src="~/scripts/powerbi.js"></script>
 
-<!--@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
 {
     <div id="errorWrapper">
         <h2>
@@ -18,7 +18,7 @@
     </div>
 
     return;
-}-->
+}
 
 <h2>Embedded QnA</h2>
 <div>
@@ -64,7 +64,7 @@
         datasetIds:[embedDashboardId],
         type: 'qna',
         viewMode:models.QnaMode['ResultOnly'],
-        question: qstn
+        question: embedDashboardId
     };
 
     // Get a reference to the embedded dashboard HTML element

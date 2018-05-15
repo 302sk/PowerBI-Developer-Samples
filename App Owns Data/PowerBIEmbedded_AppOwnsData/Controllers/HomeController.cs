@@ -133,9 +133,13 @@ namespace PowerBIEmbedded_AppOwnsData.Controllers
         public async Task<ActionResult> EmbedQnA(string question)
         {
             //if parameter question is null or empty use default question
+            string qstn = "";
             if (string.IsNullOrEmpty(question))
             {
-                question = "norm of percent of turnover";
+                qstn = "norm of percent of turnover";
+            }
+            else{
+                qstn = question;
             }
 
             var error = GetWebConfigErrors();
@@ -204,8 +208,7 @@ namespace PowerBIEmbedded_AppOwnsData.Controllers
                 {
                     EmbedToken = tokenResponse,
                     EmbedUrl = "https://app.powerbi.com/qnaEmbed?groupId=" + GroupId,
-                    Id = dataset.Id,
-                    ErrorMessage = question
+                    Id = qstn
                 };
 
                 return View(embedConfig);
