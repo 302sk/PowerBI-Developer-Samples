@@ -191,7 +191,8 @@ namespace PowerBIEmbedded_AppOwnsData.Controllers
                 var embedConfig = new EmbedConfig()
                 {
                     EmbedToken = tokenResponse,
-                    EmbedUrl = dashboard.EmbedUrl,
+                    //EmbedUrl = dashboard.EmbedUrl,
+                    EmbedUrl = "https://app.powerbi.com/qnaEmbed?groupId=" + GroupId,
                     Id = dashboard.Id
                 };
 
